@@ -12,6 +12,9 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import {menuPost, generateError, generateSuccess} from "../Api/adminApi";
+import { ToastContainer } from "react-toastify";
 
 function Copyright(props) {
   return (
@@ -29,13 +32,24 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
+
+  const navigate =  useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    let user = {
       email: data.get('email'),
       password: data.get('password'),
-    });
+    };
+    if(user?.email && user?.password){
+      navigate('/admin');
+    }else if(user?.password){
+      generateError("Email is required!");
+    }else{
+      generateError("Password is required!");
+    }
+    
   };
 
   return (
@@ -102,6 +116,7 @@ export default function SignInSide() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                
               >
                 Sign In
               </Button>
@@ -122,6 +137,7 @@ export default function SignInSide() {
           </Box>
         </Grid>
       </Grid>
+      <ToastContainer />
     </ThemeProvider>
   );
 }

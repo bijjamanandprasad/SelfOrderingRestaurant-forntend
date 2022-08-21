@@ -5,8 +5,11 @@ import CartItem from "./CartItem";
 
 import {TextField, Button, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import {getCustomerData, getCustomerId} from "../Api/Api";
-import { submitOrder } from  '../Api/Api'; 
+import {getCustomerData,submitOrder, getCustomerId} from "../Api/Api";
+
+import { generateError, generateSuccess} from "../Api/adminApi";
+import { ToastContainer } from "react-toastify";
+
 const classes = {
     container:{
         width:"520px",
@@ -40,14 +43,21 @@ export default function CartPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        submitOrder({customer_id: customer_id, bill: payment.amount}).then((data) => console.log(data));
+        submitOrder({customer_id: customer_id, bill: payment.amount}).then((data) => {
+            console.log(data);
+            if(data?.error_msg){generateError(data.error_msg);}
+            else if(data?.error){generateError(data.error);}
+            else{
+                generateSuccess("Your orders is submitted Successfully !");
+            }
+        });
         clear();
     }
 
 
  
     useEffect(()=>{
-        if(table_no == {} || table_no == null || table_no == ''){
+        if(table_no === {} || table_no === null || table_no === ''){
           alert("please select ur table number");
         }
         else{
@@ -55,7 +65,7 @@ export default function CartPage() {
             setCustomer_id(data.id);
 
             console.log(JSON.stringify(data));
-            if(data.id != '' || data != {}){
+            if(data.id !== '' || data !== {}){
                 getCustomerData({customer_id:data.id})
                 .then((data) => {
                     var total_bill = 0;
@@ -113,7 +123,7 @@ export default function CartPage() {
         </form>
      </Paper>
     </div>
-
+    <ToastContainer />
    </>
 
 

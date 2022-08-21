@@ -1,13 +1,13 @@
-import React,{useEffect, useState} from "react";
+import React,{useState} from "react";
 import { useNavigate } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {TextField, Button, Typography } from '@mui/material';
 import { CssBaseline, Paper } from "@mui/material";
-import { height } from "@mui/system";
+
 import MenuPage from "../MenuPage/MenuPage";
 
-import {menuPost} from "../Api/adminApi";
-
+import {menuPost, generateError, generateSuccess} from "../Api/adminApi";
+import { ToastContainer } from "react-toastify";
 const classes = {
     container:{
         width:"520px",
@@ -51,8 +51,15 @@ const AdminPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        menuPost(item).then(data => console.log(JSON.stringify(data)));
-        // refreshPage();
+        menuPost(item).then(data => {
+            console.log(JSON.stringify(data));
+            if(data?.error){generateError(data.error);}
+            else{
+                generateSuccess("Menu Item is added Successfully !");
+                // refreshPage();
+            }
+        });
+        
         clear();
     }
 
@@ -69,7 +76,7 @@ const AdminPage = () => {
             
                 <Paper style={ classes.container }>
                     <form autoComplete="off" noValidate onSubmit={ handleSubmit }>
-                        <Typography style={ classes.title } variant="h6" >Fill Item Details</Typography>
+                        <Typography style={ classes.title } variant="h6" >Add the Menu Items</Typography>
                         <TextField style={ classes.field }  name='Item name' variant='outlined' label="Item name" fullWidth value={ item.title} onChange={ (e) => setItem({ ...item, title: e.target.value }) } />
                         <TextField style={ classes.field }  name='Description' variant='outlined' label="Description" fullWidth value={ item.description} onChange={ (e) => setItem({ ...item, description: e.target.value }) } />
                         <TextField style={ classes.field } type='number' name='price' variant='outlined' label="Price" fullWidth value={ item.price } onChange={ (e) => setItem({ ...item, price: e.target.value }) } />
@@ -83,7 +90,7 @@ const AdminPage = () => {
             </div>
 
             <MenuPage back='false' admin="true" />
-
+        <ToastContainer />
         </>
     );
 }

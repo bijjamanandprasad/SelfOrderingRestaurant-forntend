@@ -137,6 +137,12 @@ const Navbar = () => {
             >
               Cart
             </Button>
+            <Button
+              onClick={ () => navigate('/adminsignin') }
+              sx={ { my: 2, color: 'white', display: 'block' } }
+            >
+              Admin
+            </Button>
 
           </Box>
 

@@ -19,7 +19,7 @@ export default function MenuPage({back,admin}) {
   const [customers, setCustomers] = useState([]);
 
     React.useEffect(()=>{
-        if(table_no == {} || table_no == null || table_no == ''){
+        if(table_no === {} || table_no === null || table_no === ''){
           alert("please select ur table number");
         }
         else{
@@ -62,7 +62,7 @@ export default function MenuPage({back,admin}) {
         <h1 style={ { color: "white", padding: "30px" } }>Menu</h1>
       </div>
 
-      { admin=='false' && <select class="form-select" onChange={handleChange}>
+      { admin==='false' && <select class="form-select" onChange={handleChange}>
           <option selected>Please select the table number</option>
             {customers?.map((option,i) => (
               <option value={option.table_no}>{option.table_no} : {option.customer_name}</option>

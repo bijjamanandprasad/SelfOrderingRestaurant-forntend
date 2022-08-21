@@ -12,7 +12,7 @@ const App = () =>{
             <CssBaseline />
             
             <Navbar />
-            <SlideShow />
+            {/* <SlideShow /> */}
             <MenuPage back='false' admin='false' />
             <Footer />
            

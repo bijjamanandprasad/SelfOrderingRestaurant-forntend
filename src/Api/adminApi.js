@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { toast } from "react-toastify";
 const URL = "http://localhost:5000";
 
 export const menuPost = async (value) => {
@@ -52,3 +52,14 @@ export const customerDetails = async () => {
         console.log(error + "getting customer details is failed");
     }
 }
+
+export const generateError = (error) =>
+toast.error(error, {
+  position: "bottom-right",
+  closeOnClick: true,
+});
+export const generateSuccess = (error) =>
+toast.success(error, {
+  position: "bottom-right",
+  closeOnClick: true,
+});

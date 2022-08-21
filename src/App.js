@@ -8,7 +8,7 @@ import AdminSignin from "./AdminPage/AdminSignin";
 import AdminRegistation from "./AdminPage/AdminRegistration";
 import AdminAddUser from "./AdminPage/AdminAddUser";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-
+import 'react-toastify/dist/ReactToastify.css';
 const App = () =>{ 
     return(
         <BrowserRouter>

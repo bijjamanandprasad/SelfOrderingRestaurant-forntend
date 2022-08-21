@@ -5,15 +5,12 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
-
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { cartItemInsert, setBill, getCustomerId, getCustomerData, deleteCartItem, incrementItem, decrementItem } from  '../Api/Api'; 
-import {menuItemDelete} from "../Api/adminApi";
+import { generateError, generateSuccess} from "../Api/adminApi";
+import { ToastContainer } from "react-toastify";
  
 const CartItem = ({_id,title,description,price,payment,setPayment,img,category,amount, cartId, count}) => {
 
@@ -26,16 +23,16 @@ const CartItem = ({_id,title,description,price,payment,setPayment,img,category,a
     window.location.reload();
   }
 
-  const append = () => {
-    cartItemInsert({"customer_id": customer_id,"menu_id":_id}).then((data) => {
-      console.log(JSON.stringify(data));
-    })
-  }
 
   const deleteItem = () => {
         deleteCartItem({customer_id:customer_id,cart_item_id:cartId}).then((data) => {
         console.log(JSON.stringify(data) + "deleeeeted");
-        refreshPage();
+        if(data?.error_msg){generateError(data.error_msg);}
+        else if(data?.error){generateError(data.error);}
+        else{
+            generateSuccess("Item is deleted successfully !");
+            refreshPage();
+        }
       })
   }
 
@@ -74,7 +71,7 @@ const CartItem = ({_id,title,description,price,payment,setPayment,img,category,a
         else{
           getCustomerId({table_no:table_no}).then((data) => {
             setCustomer_id(data.id);
-            if(data.id != '' || data != {}){
+            if(data.id !== '' || data !== {}){
               getCustomerData({customer_id:data.id}).then((data) => {
                   setCustomerData(data);
               })
@@ -130,7 +127,7 @@ const CartItem = ({_id,title,description,price,payment,setPayment,img,category,a
           <Button onClick={deleteItem} size="small" style={ { fontSize: '10px' } } color='primary'> <DeleteIcon /></Button>
         </CardActions>
       </Card>
-
+    <ToastContainer />
     </>
   );
 }

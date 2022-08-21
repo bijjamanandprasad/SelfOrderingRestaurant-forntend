@@ -6,9 +6,11 @@ import { CssBaseline, Paper } from "@mui/material";
 import { height } from "@mui/system";
 import MenuPage from "../MenuPage/MenuPage";
 
-import {addCustomer, customerDetails} from "../Api/adminApi";
+import {addCustomer, customerDetails, generateError, generateSuccess} from "../Api/adminApi";
 
 import Customers from "../customers/Customers";
+
+import { ToastContainer } from "react-toastify";
 
 const classes = {
     container:{
@@ -49,10 +51,17 @@ const AdminPage = () => {
         });    
     }
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        addCustomer(item).then(data => console.log(JSON.stringify(data)));
-        // refreshPage();
+        addCustomer(item).then(data => {
+            console.log(JSON.stringify(data))
+            if(data?.error_msg){generateError(data.error_msg);}
+            else{
+                generateSuccess("User is added Successfully !");
+                refreshPage();
+            }
+        })
         clear();
     }
 
@@ -92,7 +101,7 @@ const AdminPage = () => {
                 <Customers key={ i } {...curUser}/>
             )) }
             </div>
-
+            <ToastContainer />
         </>
     );
 }
