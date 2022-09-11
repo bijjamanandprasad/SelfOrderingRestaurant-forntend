@@ -11,14 +11,17 @@ export default function MenuPage({back,admin}) {
   const navigate = useNavigate();
   const [menuItems, setMenuItems] = useState([]);
 
-
   const [table_no, setTable_no] = React.useState('1');
   const [customer_id, setCustomer_id] = React.useState('');
   const [customerData, setCustomerData] = React.useState([]);
 
   const [customers, setCustomers] = useState([]);
 
+   if(admin == null || admin == ''){admin = 'false'}
+
     React.useEffect(()=>{
+
+
         if(table_no === {} || table_no === null || table_no === ''){
           alert("please select ur table number");
         }

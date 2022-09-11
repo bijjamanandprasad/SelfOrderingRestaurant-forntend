@@ -1,3 +1,4 @@
+import { padding } from "@mui/system";
 import React from "react";
 import {
 Box,
@@ -6,19 +7,38 @@ Row,
 Column,
 FooterLink,
 Heading,
-} from "./FooterStyles";
+} from "./styles";
+
+const classes = {
+	margin:{
+		padding:'30px',
+		marginTop:'25px'
+	},
+	footer:{
+		height:'50px',
+		background:'#1c1b1b',
+		display:'flex',
+		padding:'10px',
+		justifyContent:'center',
+		alignItems:'center',
+		color:'white'
+	}
+}
 
 const Footer = () => {
+	
 return (
-	<Box style={{position:'relative'}}>
-	<h1 style={{ color: "white",
-				textAlign: "center",
-				marginTop: "-50px",
-                borderBottom:'2px solid white',
-                paddingBottom:'18px' }}>
-		Hotel Bill Servies
-	</h1>
-	<Container>
+	<>
+		<Box>
+		<h1 style={{ color:"white",
+					textAlign: "center",
+					marginTop: "-50px",
+					borderBottom: "1px solid #d51739",
+					paddingBottom: "20px"
+					}}>
+			Self Ordering Restuarant
+		</h1>
+	{/* <Container>
 		<Row>
 		<Column>
 			<Heading>About Us</Heading>
@@ -40,40 +60,37 @@ return (
 			<FooterLink href="#">Indore</FooterLink>
 			<FooterLink href="#">Mumbai</FooterLink>
 		</Column>
+		</Row>
+	</Container> */}
+
+	<Container>
+		<Row>
 		<Column>
-			<Heading>Social Media</Heading>
-			<FooterLink href="#">
-			<i className="fab fa-facebook-f">
-				<span style={{ marginLeft: "10px" }}>
-				Facebook
-				</span>
-			</i>
-			</FooterLink>
-			<FooterLink href="#">
-			<i className="fab fa-instagram">
-				<span style={{ marginLeft: "10px" }}>
-				Instagram
-				</span>
-			</i>
-			</FooterLink>
-			<FooterLink href="#">
-			<i className="fab fa-twitter">
-				<span style={{ marginLeft: "10px" }}>
-				Twitter
-				</span>
-			</i>
-			</FooterLink>
-			<FooterLink href="#">
-			<i className="fab fa-youtube">
-				<span style={{ marginLeft: "10px" }}>
-				Youtube
-				</span>
-			</i>
-			</FooterLink>
+			
+			<div style={{display:'flex'}}>
+				<FooterLink href="#">
+					<i style={classes.margin} className="fab fa-facebook-f"></i>
+					</FooterLink>
+					<FooterLink href="#">
+					<i style={classes.margin} className="fab fa-instagram"></i>
+					</FooterLink>
+					<FooterLink href="#">
+					<i style={classes.margin} className="fab fa-twitter"></i>
+					</FooterLink>
+					<FooterLink href="#">
+					<i style={classes.margin} className="fab fa-youtube"></i>
+				</FooterLink>
+			</div>
+	
 		</Column>
 		</Row>
 	</Container>
+
 	</Box>
+	<div style={classes.footer}>
+		<p>© 2022 Copyright: rguktn@cse_miniproject.com</p>
+	</div>
+	</>
 );
 };
 export default Footer;

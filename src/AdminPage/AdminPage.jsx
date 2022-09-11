@@ -5,7 +5,6 @@ import {TextField, Button, Typography } from '@mui/material';
 import { CssBaseline, Paper } from "@mui/material";
 
 import MenuPage from "../MenuPage/MenuPage";
-
 import {menuPost, generateError, generateSuccess} from "../Api/adminApi";
 import { ToastContainer } from "react-toastify";
 const classes = {
@@ -19,6 +18,19 @@ const classes = {
     },
     field:{
         marginBottom:'10px'
+    },
+    addBtn:{
+        position:' absolute',
+        float: 'right',
+        top: '39px',
+        right: '26px',
+        background: '#1976d2',
+        padding:' 0 10px',
+        borderRadius: '25px',
+        height: '36px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 }
 
@@ -67,10 +79,21 @@ const AdminPage = () => {
         <>
         <div style={{background:'black',width:"100%",minHeight:'100vh'}}>
             <CssBaseline />
-            <div style={ { display: 'flex', color: 'white', position: 'relative', background: 'black', justifyContent: 'center' } }>
+            <div style={ { display: 'flex', color: 'white', position: 'relative', background: 'black', alignItems:'center' ,justifyContent: 'center' } }>
                 { <ArrowBackIcon style={ { position: 'absolute', fontSize: '30px', left: '30px', top: '58px' } } onClick={ () => navigate(-1) } /> }
 
                 <h1 style={ { color: "white", padding: "30px" } }> Admin </h1>
+
+            </div>
+
+            <div style={classes.addBtn}>
+            <Button
+                    style={{fontWeight: 'bold'}}
+                    onClick={ () => navigate('/adminadduser') }
+                    sx={ { my: 2, color: 'white', display: 'block' } }
+                    >
+                        Add User
+                </Button>
             </div>
 
             

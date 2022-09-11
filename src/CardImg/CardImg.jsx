@@ -15,7 +15,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { cartItemInsert, getCustomerId, getCustomerData } from  '../Api/Api'; 
 import {menuItemDelete} from "../Api/adminApi";
 import { useNavigate } from 'react-router-dom';
- 
+import { generateError, generateSuccess} from "../Api/adminApi";
+import { ToastContainer } from "react-toastify";
 const CardImg = ({_id,title,description,price,img,category, admin, customer_id, customerData}) => {
 
   const [isItemInCart, setIsItemInCart] = React.useState(false);
@@ -38,13 +39,24 @@ const CardImg = ({_id,title,description,price,img,category, admin, customer_id, 
     cartItemInsert({"customer_id": customer_id,"menu_id":_id}).then((data) => {
       setIsItemInCart(true);
       console.log(JSON.stringify(data));
+
+      if(data?.error_msg){generateError("OOOOPs , User is not assigned to table!!");}
+      else if(data?.error){generateError("User is not assigned to table!!");}
+      else{
+          generateSuccess("Item is inserted to Cart !");
+      }
+
     })
   }
 
   const deleteItem = () => {
       menuItemDelete({id:_id}).then((data) => {
         console.log(JSON.stringify(data));
-        // refreshPage();
+        if(data?.error_msg){generateError(data.error_msg);}
+        else if(data?.error){generateError(data.error);}
+        else{
+            generateSuccess("Deleted the Item from DB !");
+        }
       })
   }
 
@@ -81,7 +93,7 @@ const CardImg = ({_id,title,description,price,img,category, admin, customer_id, 
           { admin=='true' && <Button onClick={deleteItem} size="small" style={ { fontSize: '10px' } } color='primary'> <DeleteIcon /></Button>}
         </CardActions>
       </Card>
-
+      <ToastContainer />
     </>
   );
 }

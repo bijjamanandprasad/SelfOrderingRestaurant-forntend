@@ -12,8 +12,8 @@ const App = () =>{
             <CssBaseline />
             
             <Navbar />
-            {/* <SlideShow /> */}
-            <MenuPage back='false' admin='false' />
+            <SlideShow />
+            {/* <MenuPage back='false' admin='false' /> */}
             <Footer />
            
         </>

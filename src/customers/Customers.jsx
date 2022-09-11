@@ -8,21 +8,37 @@ import {submitBill} from "../Api/Api";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteCustomer } from '../Api/adminApi';
 
+
+import { generateError, generateSuccess} from "../Api/adminApi";
+import { ToastContainer } from "react-toastify";
+
 const Customers = (props) => {
 // {_id, table_no, customer_name, order_status, phone_no,bill, bill_status, }
 
     const deleteUser = () => {
         deleteCustomer({customer_id: props._id}).then((data) => {
-            // window.location.reload();
+          if(data?.error_msg){generateError(data.error_msg);}
+          else if(data?.error){generateError(data.error);}
+          else{
+              generateSuccess("User is deleted Sucessfully !");
+          }
+      
         })
     }
 
     const payTheBill = () => {
       submitBill({customer_id: props._id}).then((data) => {
         console.log("Bill is paid");
+        if(data?.error_msg){generateError(data.error_msg);}
+        else if(data?.error){generateError(data.error);}
+        else{
+            generateSuccess("Bill status is updated as paid !");
+        }
+    
       })
     }
 
+ 
   return (
     <>
       <Card sx={ {width:345, maxWidth: 345, margin: '10px' } }>
@@ -68,7 +84,7 @@ const Customers = (props) => {
            <Button onClick={payTheBill} size="small" style={ { fontSize: '16px' } } color='primary'> Paid </Button>
         </CardActions>
       </Card>
-
+      <ToastContainer />
 
     </>
   );
